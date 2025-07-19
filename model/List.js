@@ -10,7 +10,7 @@ const List = new jsonDb.Schema(
         },
         type: {
             type: String,
-            enum: ['movie', 'series', 'documentary', 'standup', 'kids'],
+            enum: ['movie', 'series', 'documentary', 'standup', 'kids', 'mixed'],
             required: true,
         },
         genre: {
@@ -25,6 +25,12 @@ const List = new jsonDb.Schema(
                 'romance',
                 'documentary',
                 'animation',
+                'crime',
+                'fantasy',
+                'sports',
+                'mystery',
+                'war',
+                'western'
             ],
             required: true,
         },
