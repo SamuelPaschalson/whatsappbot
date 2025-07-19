@@ -16,6 +16,20 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     liveReload: true,
+    // Add these security-conscious settings:
+    allowedHosts: [
+      'localhost',
+      '127.0.0.1',
+      // Add your production domain(s) here:
+      'https://whatsappbot-ezhw.onrender.com',
+      // Add your Render.com hostname when deployed:
+      process.env.RENDER_EXTERNAL_HOSTNAME || ''
+    ].filter(Boolean), // Removes empty strings
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
   },
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts"],
