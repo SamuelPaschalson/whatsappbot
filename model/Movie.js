@@ -61,7 +61,23 @@ const Movie = new jsonDb.Schema(
             primary: {
                 type: String,
                 required: true,
-                enum: ['action', 'comedy', 'drama', 'sci-fi', 'horror', 'romance', 'thriller'],
+                enum: [
+                    'action',
+                    'comedy',
+                    'drama',
+                    'horror',
+                    'sci-fi',
+                    'thriller',
+                    'romance',
+                    'documentary',
+                    'animation',
+                    'crime',
+                    'fantasy',
+                    'sports',
+                    'mystery',
+                    'war',
+                    'western'
+                ],
             },
             secondary: [
                 {
