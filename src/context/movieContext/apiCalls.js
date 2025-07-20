@@ -66,32 +66,33 @@ export const createMovie = async (movie, dispatch) => {
       },
       rating: movie.rating,
       year: Number(movie.year),
-      limit: Number(movie.limit),
+      limit: Number(movie?.limit),
       seriesInfo:
         movie.type === "series"
           ? {
-              seasons: Number(movie.seriesInfo.seasons),
-              episodes: Number(movie.seriesInfo.episodes),
+              seasons: Number(movie.seriesInfo?.seasons),
+              episodes: Number(movie.seriesInfo?.episodes),
               currentEpisode: {
                 // Added default current episode
-                title: "",
-                duration: "",
-                description: "",
+                title: movie.seriesInfo?.currentEpisode?.title || "",
+                duration: movie.seriesInfo?.currentEpisode?.duration || "",
+                description:
+                  movie.seriesInfo?.currentEpisode?.description || "",
               },
             }
           : undefined,
       actions: {
         // Added required actions object
-        playUrl: "",
-        addToList: false,
+        playUrl: movie.actions?.playUrl || "",
+        addToList: movie.actions?.addToList || false,
         isInMyList: false,
       },
       uiStates: {
         // Added uiStates with all required fields
-        isFeatured: movie.uIStates?.isFeatured || false,
-        isTrending: movie.uIStates?.isTrending || false,
-        isNewRelease: false,
-        matchScore: 0,
+        isFeatured: movie.uiStates.isFeatured,
+        isTrending: movie.uiStates.isTrending,
+        isNewRelease: movie.uiStates.isNewRelease,
+        matchScore: movie.uiStates.matchScore,
       },
       technical: {
         // Added technical with all required fields
