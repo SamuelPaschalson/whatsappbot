@@ -1,4 +1,3 @@
-// ListItem.jsx
 import React, { useState, useRef, useEffect } from "react";
 import "./listItem.scss";
 import {
@@ -9,9 +8,15 @@ import {
 } from "@material-ui/icons";
 import axios from "axios";
 import VideoPlayer from "../videoplayer/VideoPlayer";
-import zIndex from "@material-ui/core/styles/zIndex";
+import Preview from "../preview/preview";
 
-const ListItem = ({ item }) => {
+const ListItem = ({
+  item,
+  index,
+  totalItems,
+  setShowPreview,
+  setPreviewData,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [movie, setMovie] = useState(null);
@@ -24,7 +29,6 @@ const ListItem = ({ item }) => {
         const res = await axios.get(
           "https://whatsappbot-1-e6rt.onrender.com/api/movie/find/" + item._id
         );
-        console.log(res.data.data);
         setMovie(res.data.data);
       } catch (err) {
         console.log(err);
@@ -33,10 +37,24 @@ const ListItem = ({ item }) => {
     getMovie();
   }, [item]);
 
+  const capitalizeFirst = (str) => {
+    // return str;
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+  const togglePreview = () => {
+    clearTimeout(hoverTimeout.current);
+    clearTimeout(videoTimeout.current);
+    setIsHovered(false);
+    setShowVideo(false);
+    setShowPreview(true);
+    const data = item._id;
+    setPreviewData(data);
+    // return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   const handleHover = () => {
     clearTimeout(hoverTimeout.current);
     clearTimeout(videoTimeout.current);
-
     setIsHovered(true);
     videoTimeout.current = setTimeout(() => {
       setShowVideo(true);
@@ -59,7 +77,9 @@ const ListItem = ({ item }) => {
 
   return (
     <div
-      className={`listItem ${isHovered ? "hovered" : ""}`}
+      className={`listItem ${isHovered ? "hovered" : ""} ${
+        index === 0 ? "first" : index === totalItems - 1 ? "last" : ""
+      }`}
       onMouseEnter={handleHover}
       onMouseLeave={handleLeave}
     >
@@ -72,66 +92,66 @@ const ListItem = ({ item }) => {
             className="itemImage"
           />
         ) : (
-          <>
-            <VideoPlayer
-              videoPreview={movie?.assets?.videoPreview}
-              thumbnail={movie?.assets?.thumbnail}
-              title={movie?.title}
-            />
-          </>
+          <VideoPlayer
+            videoPreview={movie?.assets?.videoPreview}
+            thumbnail={movie?.assets?.thumbnail}
+            title={movie?.title}
+          />
         )}
         {isHovered && (
-          <>
-            <div className="itemHover">
-              <div className="itemInfo">
-                <div
-                  className="icons"
-                  style={{ justifyContent: "space-between" }}
-                >
-                  <div style={{ display: "flex" }}>
-                    <button className="icon play">
-                      <img src="./assets/svg/Play.svg" alt="" />
-                    </button>
-                    <button className="icon">
-                      <img src="./assets/svg/Plus.svg" alt="" />
-                    </button>
-                    <button className="icon">
-                      <img src="./assets/svg/ThumbsUp.svg" alt="" />
-                    </button>
-                  </div>
-                  <div>
-                    <button className="icon">
-                      <img src="./assets/svg/Icon.svg" alt="" />
-                    </button>
-                  </div>
+          <div className="itemHover">
+            <div className="itemInfo">
+              <div
+                className="icons"
+                style={{ justifyContent: "space-between" }}
+              >
+                <div style={{ display: "flex" }}>
+                  <button className="icon play">
+                    <img src="./assets/svg/Play.svg" alt="Play button" />
+                  </button>
+                  <button className="icon">
+                    <img src="./assets/svg/Plus.svg" alt="addToList button" />
+                  </button>
+                  <button className="icon">
+                    <img src="./assets/svg/ThumbsUp.svg" alt="Like button" />
+                  </button>
                 </div>
+                <div>
+                  <button className="icon" onClick={togglePreview}>
+                    <img src="./assets/svg/Icon.svg" alt="More Info" />
+                  </button>
+                </div>
+              </div>
 
-                <div className="itemInfoTop">
-                  <span className="match">
+              <div className="itemInfoTop">
+                {movie?.uiStates?.isNewRelease !== true ? (
+                  <span className="match tag new">New</span>
+                ) : (
+                  <span className="match tag new">
                     {movie?.uiStates?.matchScore}% Match
                   </span>
-                  <span className="limit">{movie?.limit}+</span>
-                  <span className="hd">HD</span>
-                </div>
+                )}
+                <span className="rating">{movie?.rating}</span>
+                <span className="seasons">
+                  {movie?.isSeries
+                    ? `${movie?.seriesInfo?.seasons} Seasons`
+                    : "Movie"}
+                </span>
+                <span className="hd">HD</span>
+              </div>
 
-                <div className="genres">
-                  {movie?.genre && <span>{movie.genre}</span>}
-                  {movie?.genre1 && <span>• {movie.genre1}</span>}
-                  {movie?.genre2 && <span>• {movie.genre2}</span>}
-                </div>
-
-                {/* Additional information that appears on hover */}
-                {/* <p className="desc">
-                  {movie?.desc || "No description available."}
-                </p> */}
-
-                {/* <div className="episodeInfo">
-                  <span>Episode 1</span>
-                  <span>52m</span>
-                </div> */}
+              <div className="genres">
+                <span className="primary">
+                  {capitalizeFirst(movie?.genres?.primary)}
+                </span>
+                {movie?.genres?.secondary?.map((genre, index) => (
+                  <span key={index} className="secondary">
+                    • {capitalizeFirst(genre)}
+                  </span>
+                ))}
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

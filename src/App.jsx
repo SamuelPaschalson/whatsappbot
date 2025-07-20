@@ -1,8 +1,6 @@
 import React from "react";
 import Home from "./pages/home/Home";
 import "./app.scss";
-import Register from "./pages/register/Register";
-//import Watch from './pages/watch/Watch'
 import Login from "./pages/login/Login";
 import {
   BrowserRouter as Router,
@@ -10,17 +8,29 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import Start from "./pages/start/Start";
+import { useState } from "react";
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
-  const user = true;
+  const [user, setUser] = useState(localStorage.getItem("user") || false);
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          {user ? <Home /> : <Redirect to="register" />}
+          {user ? <Home /> : <Redirect to="login" />}
         </Route>
         <Route exact path="/login">
-          {!user ? <Login /> : <Redirect to="login" />}
+          {!user ? <Login setUser={setUser} /> : <Redirect to="login" />}
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/start">
+          <Start />
+        </Route>
+        <Route path="/browse">
+          <Profile />
         </Route>
         {user && (
           <>

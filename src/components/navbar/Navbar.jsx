@@ -1,7 +1,6 @@
 import React from "react";
 import "./navbar.scss";
 import stylixLogo from "../../assets/logo.png"; // Update with STYLIX logo
-import avatar from "../../assets/profile/avatar.png";
 import {
   Search,
   NotificationsNoneOutlined,
@@ -13,7 +12,7 @@ import { Badge, IconButton } from "@material-ui/core";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ img }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   window.onscroll = () => {
@@ -66,7 +65,7 @@ const Navbar = () => {
               </Badge>
             </IconButton>
             <div className="profile">
-              <img style={{ marginLeft: "10px" }} src={avatar} alt="" />
+              <img style={{ marginLeft: "10px" }} src={img} alt="" />
               <ArrowDropDown className="icon2" />
               <div className="options">
                 <ArrowDropUp style={{ marginRight: "20px" }} className="icon" />

@@ -6,9 +6,12 @@ import Footer from "../../components/footer/Footer";
 import "./home.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const Home = ({ type }) => {
   const [lists, setLists] = useState([]);
+  const location = useLocation();
+
   const [genre, setGenre] = useState(null);
 
   useEffect(() => {
@@ -26,7 +29,6 @@ const Home = ({ type }) => {
             },
           }
         );
-        // console.log(res.data);
 
         setLists(res.data.data);
       } catch (err) {
@@ -38,14 +40,21 @@ const Home = ({ type }) => {
 
   return (
     <div className="home">
-      <Navbar />
-      <Featured type={type} setGenre={setGenre} />
-      <div className="lists">
-        {lists.map((list, index) => (
-          <List key={index} list={list} />
-        ))}
+      <Navbar img={location?.state?.img} />
+      <div className="content-container">
+        <Featured type={type} setGenre={setGenre} />
+        <div className="lists">
+          {lists.map((list, index) => (
+            <List
+              key={index}
+              list={list}
+              // setShowPreview={setShowPreview}
+              // setPreviewData={setPreviewData}
+            />
+          ))}
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };

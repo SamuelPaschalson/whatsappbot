@@ -5,7 +5,7 @@ import {
   InfoOutlined,
   PlayArrow,
   Speaker,
-  SpeakerOutlined,
+  VolumeUp,
   Add,
 } from "@material-ui/icons";
 import { motion } from "framer-motion";
@@ -132,8 +132,9 @@ export default function Featured({ type, setGenre }) {
             // className="limit"
             whileTap={{ scale: 0.95 }}
           >
-            <SpeakerOutlined />
-            {/* <span>More Info</span> */}
+            {/* <VolumeUp /> */}
+            <VolumeUp />
+            {/* {/* <span>More Info</span> */}
           </motion.button>
           <div className="limit">
             <span>{content.rating}</span>

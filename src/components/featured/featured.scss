@@ -1,149 +1,5 @@
-@import "../../app.scss";
-// .featured{
-//     height: 110vh;
-//     background: linear-gradient(to bottom 0%, rgb(0,0,0,0.3) 50%);
-//     box-shadow: 0px 0px 20px 0px linear-gradient(rgb(0,0,0,0.3));
+// @import "../../app.scss";
 
-//     .category {
-//         position: absolute;
-//         top: 80px;
-//         left: 50px;
-//         font-size: 30px;
-//         font-weight: 500;
-//         color: white;
-//         display: flex;
-//         align-items: center;
-
-//         select {
-//           cursor: pointer;
-//           background-color: var(--main-color);
-//           border: 1px solid white;
-//           color: white;
-//           margin-left: 20px;
-//           padding: 5px;
-//         }
-//     }
-
-//     img.background{
-//         height: 100%;
-//         width: 100%;
-//         object-fit: cover;
-//         background: linear-gradient(to top,transparent 0%, rgb(0,0,0,0.3) 50%);
-//         z-index: -999;
-//         overflow: hidden;
-//     }
-//     video.vids{
-//       object-fit: cover;
-//       height: 100%;
-//       width: 100%;
-//       display: none;
-//     }
-//     .shadow{
-//       // background: linear-gradient(to bottom,transparent 0%, rgba(16,16,16,0.85) 50%);
-//       background-image: linear-gradient(180deg,transparent,rgba(37,37,37,0.61), #111);
-//       position: absolute;
-//       // width: 100%;
-//       top: 85%;
-//       height: 30%;
-//       display: block;
-//       left: 0;
-//       right: 0;
-//       bottom: 0;
-//       cursor: pointer;
-//     }
-//     .info {
-//         width: 35%;
-//         position: absolute;
-//         left: 50px;
-//         bottom: 200px;
-//         color: white;
-//         display: flex;
-//         flex-direction: column;
-//         margin-top: -40px;
-
-//         img {
-//           width: 60vw;
-//           position: relative;
-//         //   @include mobile{
-//         //     width: 60vw;
-//         //   }
-//         }
-
-//         .desc {
-//           margin-top: 13px;
-//           margin-bottom: 6px;
-//           z-index: 99;
-//         }
-
-//         .buttons {
-//           display: flex;
-//           z-index: 99;
-//           margin-top: 20px;
-
-//           button {
-//             padding: 3px 18px;
-//             border: none;
-//             border-radius: 5px;
-//             display: flex;
-//             align-items: center;
-//             justify-content: center;
-//             font-size: 18px;
-//             font-weight: 500;
-//             margin-right: 10px;
-//             cursor: pointer;
-
-//             &.play {
-//               background-color: white;
-//               color: var(--main-color);
-//               .arrow{
-//                 font-size: 2.65vw;
-//               }
-//               span{
-//                 font-weight: bold;
-//               }
-//             }
-
-//             &.more {
-//               background-color: gray;
-//               color: white;
-//               padding: .2rem 1.2rem;
-//               .arrow1{
-//                 font-size: 2.35vw;
-//                 font-weight: thin;
-//                 padding: .1rem .1rem;
-//               }
-//               span{
-//                 -webkit-font-smoothing: antialiased;
-//                 padding: 0rem .1rem;
-//                 font-weight: 700;
-//               }
-//             }
-
-//             span {
-//               margin-left: 5px;
-//             }
-//           }
-//         }
-//       }
-//     .eplus {
-//       width: 6%;
-//       position: absolute;
-//       right: 0px;
-//       bottom: 150px;
-//       color: white;
-//       display: flex;
-//       flex-direction: column;
-//       border-left: 3px solid white;
-
-//       span{
-//         background-color: rgba(87, 84, 84, 0.726);
-//         color: white;
-//         padding: 6px 0px;
-//         padding-left: 10px;
-//         font-size: 1.2vw;
-//       }
-//     }
-// }
 .featured {
   height: 100vh;
   position: relative;
@@ -244,10 +100,21 @@
     }
   }
   .speaker {
-    right: 100;
+    right: 100px;
     position: absolute;
     cursor: pointer;
-    bottom: 150px;
+    bottom: 145px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    z-index: 2;
   }
   .limit {
     width: 7%;

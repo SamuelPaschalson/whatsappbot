@@ -1,5 +1,6 @@
 const path = require("path");
-
+// Add this at the top
+process.noDeprecation = true;
 module.exports = {
   mode: "development",
   entry: "./index.js",

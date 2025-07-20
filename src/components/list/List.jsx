@@ -1,16 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./list.scss";
 import ListItem from "../listItem/ListItem";
+import TopTen from "../topten/TopTen"; // Import the TopTen component
 import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
 import { motion } from "framer-motion";
+import Preview from "../preview/preview";
 
 export default function List({ list }) {
-  console.log(list);
-
   const [isMoved, setIsMoved] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
   const [showControls, setShowControls] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewData, setPreviewData] = useState("");
   const listRef = useRef();
+
+  // Sort the list by rowPosition before rendering
+  const sortedContent = [...list.content].sort((a, b) => {
+    const posA = a.rowPosition !== undefined ? a.rowPosition : 0;
+    const posB = b.rowPosition !== undefined ? b.rowPosition : 0;
+    return posA - posB;
+  });
 
   const handleClick = (direction) => {
     setIsMoved(true);
@@ -47,6 +56,7 @@ export default function List({ list }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
+      style={{ order: list.rowPosition || 0 }}
     >
       <span className="listTitle">{list.title}</span>
       <div className="wrapper">
@@ -57,9 +67,20 @@ export default function List({ list }) {
         />
 
         <div className="container" ref={listRef}>
-          {list.content.map((item, index) => (
-            <ListItem key={index} index={index} item={item} />
-          ))}
+          {sortedContent.map((item, index) =>
+            list.category === "top10" ? (
+              <TopTen key={item._id} index={index} item={item} />
+            ) : (
+              <ListItem
+                key={item._id}
+                index={index}
+                item={item}
+                totalItems={item.length}
+                setShowPreview={setShowPreview}
+                setPreviewData={setPreviewData}
+              />
+            )
+          )}
         </div>
 
         <ArrowForwardIos
@@ -67,6 +88,13 @@ export default function List({ list }) {
           onClick={() => handleClick("right")}
         />
       </div>
+      {showPreview && previewData && (
+        <Preview
+          item={previewData}
+          onClose={() => setShowPreview(false)}
+          // Pass any additional props your Preview component needs
+        />
+      )}
     </motion.div>
   );
 }
