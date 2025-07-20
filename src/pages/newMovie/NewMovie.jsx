@@ -108,7 +108,6 @@ export default function NewMovie() {
     );
     const images = tmdbData.images || {};
     const logo = images.logos?.[0] || {};
-
     return {
       title: tmdbData.title,
       desc: tmdbData.overview,
@@ -146,8 +145,8 @@ export default function NewMovie() {
       },
       uiStates: {
         isFeatured: false,
-        isTrending: tmdbData.popularity > 50,
-        isNewRelease: isNewRelease(tmdbData.release_date),
+        isTrending: tmdbData.popularity > 50 ? true : false,
+        isNewRelease: isNewRelease(tmdbData.release_date) ? true : false,
         matchScore: Math.min(
           Math.floor((tmdbData.vote_average || 5) * 10),
           100
@@ -170,9 +169,11 @@ export default function NewMovie() {
 
   const transformSeriesData = (tmdbData) => {
     const videos = tmdbData.videos?.results || [];
+
     const trailer = videos.find(
       (v) => v.type === "Trailer" && v.site === "YouTube"
     );
+
     const images = tmdbData.images || {};
     const logo = images.logos?.[0] || {};
 
@@ -218,8 +219,8 @@ export default function NewMovie() {
       },
       uiStates: {
         isFeatured: false,
-        isTrending: tmdbData.popularity > 50,
-        isNewRelease: isNewRelease(tmdbData.last_air_date),
+        isTrending: tmdbData.popularity > 50 ? true : false,
+        isNewRelease: isNewRelease(tmdbData.release_date) ? true : false,
         matchScore: Math.min(
           Math.floor((tmdbData.vote_average || 5) * 10),
           100
@@ -331,6 +332,7 @@ export default function NewMovie() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     createMovie(movie, dispatch);
   };
 
@@ -368,8 +370,16 @@ export default function NewMovie() {
             onClick={() => fetchNewRandomContent("movie")}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Get Random Movie"}
+            {loading ? "Loading..." : "Get Random Popular Movie"}
           </button>
+          {/* <button
+            type="button"
+            className="fetchNewButton"
+            onClick={() => fetchNewRandomContent("movie")}
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Get Random Is Trending Movie"}
+          </button> */}
           <button
             type="button"
             className="fetchNewButton"
